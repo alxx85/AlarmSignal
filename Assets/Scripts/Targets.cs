@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Targets : MonoBehaviour
 {
-    [SerializeField] private List<Stolen> _targets;
-
-    public Transform SetNewTarget()
-    {
-        Stolen newTarget = _targets[Random.Range(0, _targets.Count)];
-        newTarget.SetActive();
-        _targets.Remove(newTarget);
-        return newTarget.gameObject.transform;
-    }
+    [SerializeField] private List<MaybeStolen> _targets;
 
     private void Awake()
     {
-        _targets = new List<Stolen>(gameObject.GetComponentsInChildren<Stolen>());
+        _targets = new List<MaybeStolen>(gameObject.GetComponentsInChildren<MaybeStolen>());
+    }
+
+    public Transform SetNewTarget()
+    {
+        MaybeStolen newTarget = _targets[Random.Range(0, _targets.Count)];
+        newTarget.SetActive();
+        _targets.Remove(newTarget);
+        return newTarget.gameObject.transform;
     }
 }

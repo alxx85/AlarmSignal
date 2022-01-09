@@ -8,11 +8,16 @@ public class Signaling : MonoBehaviour
     private AudioSource _alarm;
     private SpriteRenderer _renderer;
     private bool _isActivated;
-    
     private float _volumeMax = 1f;
     private float _volumeMin = 0f;
     private float _volumeStep = 0.1f;
     private float _delayStepVolume = 0.5f;
+
+    private void Start()
+    {
+        _alarm = GetComponent<AudioSource>();
+        _renderer = GetComponent<SpriteRenderer>();
+    }
 
     public void ThiefUsingDoor()
     {
@@ -33,15 +38,8 @@ public class Signaling : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        _alarm = GetComponent<AudioSource>();
-        _renderer = GetComponent<SpriteRenderer>();
-    }
-
     private IEnumerator StartAlarm()
     {
-        Debug.Log("Alarm On");
         while (_alarm.volume < _volumeMax)
         {
             _alarm.volume = Mathf.MoveTowards(_alarm.volume, _volumeMax, _volumeStep);
@@ -51,7 +49,6 @@ public class Signaling : MonoBehaviour
 
     private IEnumerator StopAlarm()
     {
-        Debug.Log("Alarm Off");
         while (_alarm.volume > _volumeMin)
         {
             _alarm.volume = Mathf.MoveTowards(_alarm.volume, _volumeMin, _volumeStep);

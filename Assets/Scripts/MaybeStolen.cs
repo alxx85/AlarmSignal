@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stolen : MonoBehaviour
+public class MaybeStolen : MonoBehaviour
 {
     private bool _isActive = false;
 

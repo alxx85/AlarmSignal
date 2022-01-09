@@ -15,13 +15,6 @@ public class ThiefMove : MonoBehaviour
     private bool _isStolen;
     private bool _isInMove;
 
-    public void TimeToSteal()
-    {
-        _isInMove = false;
-        _animator.SetFloat("Speed", 0);
-        _animator.SetTrigger("Steal");
-    }
-
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -37,6 +30,13 @@ public class ThiefMove : MonoBehaviour
             Moving();
     }
 
+    public void TimeToSteal()
+    {
+        _isInMove = false;
+        _animator.SetFloat("Speed", 0);
+        _animator.SetTrigger("Steal");
+    }
+
     private void Moving()
     {
         float distance;
@@ -50,7 +50,6 @@ public class ThiefMove : MonoBehaviour
             }
             else
             {
-                Debug.Log("Вор сбежал!");
                 _isInMove = false;
                 Destroy(gameObject);
             }

@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class OpeningDoor : MonoBehaviour
 {
     [SerializeField] private UnityEvent _usingDoor;
+
     private Animator animator;
     private bool _isInside;
 
@@ -22,12 +23,10 @@ public class OpeningDoor : MonoBehaviour
             if (_isInside)
             {
                 animator.SetTrigger("OpenDoor");
-                Debug.Log("Outside");
                 _isInside = false;
             }
             else
             {
-                Debug.Log("Inside");
                 _isInside = true;
             }
             _usingDoor?.Invoke();
