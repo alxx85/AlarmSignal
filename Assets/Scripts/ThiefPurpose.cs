@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MaybeStolen : MonoBehaviour
+public class ThiefPurpose : MonoBehaviour
 {
-    private bool _isActive = false;
+    private bool _isTarget = false;
 
-    public void SetActive()
+    public void SetTarget()
     {
-        _isActive = true;
+        _isTarget = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_isActive)
+        if (_isTarget)
         {
             if (collision.gameObject.TryGetComponent<ThiefMove>(out ThiefMove thief))
             {

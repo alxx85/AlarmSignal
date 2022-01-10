@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Targets : MonoBehaviour
 {
-    [SerializeField] private List<MaybeStolen> _targets;
+    [SerializeField] private List<ThiefPurpose> _targets;
 
     private void Awake()
     {
-        _targets = new List<MaybeStolen>(gameObject.GetComponentsInChildren<MaybeStolen>());
+        _targets = new List<ThiefPurpose>(gameObject.GetComponentsInChildren<ThiefPurpose>());
     }
 
-    public Transform SetNewTarget()
+    public Transform SetTargetTransform()
     {
-        MaybeStolen newTarget = _targets[Random.Range(0, _targets.Count)];
-        newTarget.SetActive();
+        ThiefPurpose newTarget = _targets[Random.Range(0, _targets.Count)];
+        newTarget.SetTarget();
         _targets.Remove(newTarget);
         return newTarget.gameObject.transform;
     }

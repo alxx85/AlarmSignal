@@ -9,7 +9,6 @@ public class OpeningDoor : MonoBehaviour
     [SerializeField] private UnityEvent _usingDoor;
 
     private Animator animator;
-    private bool _isInside;
 
     private void Awake()
     {
@@ -20,15 +19,7 @@ public class OpeningDoor : MonoBehaviour
     {
         if (collision.TryGetComponent<ThiefMove>(out ThiefMove thief))
         {
-            if (_isInside)
-            {
-                animator.SetTrigger("OpenDoor");
-                _isInside = false;
-            }
-            else
-            {
-                _isInside = true;
-            }
+            animator.SetTrigger("Activate");
             _usingDoor?.Invoke();
         }
     }
