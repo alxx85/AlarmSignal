@@ -8,18 +8,20 @@ public class OpeningDoor : MonoBehaviour
 {
     [SerializeField] private UnityEvent _usingDoor;
 
-    private Animator animator;
+    private Animator _animator;
+
+    private const string _action = "Activate";
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<ThiefMove>(out ThiefMove thief))
         {
-            animator.SetTrigger("Activate");
+            _animator.SetTrigger(_action);
             _usingDoor?.Invoke();
         }
     }

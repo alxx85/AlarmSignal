@@ -15,6 +15,9 @@ public class ThiefMove : MonoBehaviour
     private bool _isStolen;
     private bool _isInMove;
 
+    private const string _move = "Speed";
+    private const string _active = "Steal";
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -33,8 +36,8 @@ public class ThiefMove : MonoBehaviour
     public void TimeToSteal()
     {
         _isInMove = false;
-        _animator.SetFloat("Speed", 0);
-        _animator.SetTrigger("Steal");
+        _animator.SetFloat(_move, 0);
+        _animator.SetTrigger(_active);
     }
 
     private void Moving()
@@ -63,7 +66,7 @@ public class ThiefMove : MonoBehaviour
                                                  transform.position.y, 0);
             }
         }
-        _animator.SetFloat("Speed", distance);
+        _animator.SetFloat(_move, distance);
     }
 
     private void SetStolen()
