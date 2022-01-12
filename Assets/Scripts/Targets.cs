@@ -16,6 +16,6 @@ public class Targets : MonoBehaviour
         ThiefPurpose newTarget = _targets[Random.Range(0, _targets.Count)];
         newTarget.SetTarget();
         _targets.Remove(newTarget);
-        return newTarget.gameObject.transform;
+        return newTarget.transform;
     }
 }

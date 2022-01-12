@@ -22,7 +22,7 @@ public class ThiefMove : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _doorPosition = transform.position;
-        _target = _possibleTargets.SetTargetTransform();
+        _target = _possibleTargets.GetTargetTransform();
         _targetPosition =_target.position.x;
         _isInMove = true;
     }

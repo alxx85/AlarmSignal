@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(AudioSource), typeof(SpriteRenderer))]
 public class Signaling : MonoBehaviour
 {
     private AudioSource _alarm;
@@ -12,11 +12,13 @@ public class Signaling : MonoBehaviour
     private float _volumeMin = 0f;
     private float _volumeStep = 0.1f;
     private float _delayStepVolume = 0.5f;
+    private List<Coroutine> _startCoroutines;
 
     private void Start()
     {
         _alarm = GetComponent<AudioSource>();
         _renderer = GetComponent<SpriteRenderer>();
+        _startCoroutines = new List<Coroutine>()
     }
 
     public void ThiefUsingDoor()
@@ -26,15 +28,29 @@ public class Signaling : MonoBehaviour
         if (_isActivated)
         {
             _alarm.Play();
-            StopCoroutine(StopAlarm());
-            StartCoroutine(StartAlarm());
-            StartCoroutine(ColorSignaling());
+            StopRunningCoroutine();
+            _startCoroutines.Add(StartCoroutine(StartAlarm()));
+            _startCoroutines.Add(StartCoroutine(ColorSignaling()));
         }
         else
         {
-            StopCoroutine(StartAlarm());
-            StopCoroutine(ColorSignaling());
-            StartCoroutine(StopAlarm());
+            StopRunningCoroutine();
+            _startCoroutines.Add(StartCoroutine(StopAlarm()));
+        }
+    }
+
+    private void StopRunningCoroutine()
+    {
+        if (_startCoroutines.Count > 0)
+        {
+            foreach (Coroutine coroutine in _startCoroutines)
+            {
+                if (coroutine != null)
+                {
+                    StopCoroutine(coroutine);
+                }
+            }
+            _startCoroutines.Clear();
         }
     }
 
