@@ -10,7 +10,7 @@ public class OpeningDoor : MonoBehaviour
 
     private Animator _animator;
 
-    private const string _action = "Activate";
+    private const string Action = "Activate";
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class OpeningDoor : MonoBehaviour
     {
         if (collision.TryGetComponent<ThiefMove>(out ThiefMove thief))
         {
-            _animator.SetTrigger(_action);
+            _animator.SetTrigger(Action);
             _usingDoor?.Invoke();
         }
     }

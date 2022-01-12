@@ -11,7 +11,7 @@ public class Targets : MonoBehaviour
         _targets = new List<ThiefPurpose>(gameObject.GetComponentsInChildren<ThiefPurpose>());
     }
 
-    public Transform SetTargetTransform()
+    public Transform GetTargetTransform()
     {
         ThiefPurpose newTarget = _targets[Random.Range(0, _targets.Count)];
         newTarget.SetTarget();
