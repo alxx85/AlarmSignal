@@ -14,7 +14,7 @@ public class Targets : MonoBehaviour
     public Transform GetTargetTransform()
     {
         ThiefPurpose newTarget = _targets[Random.Range(0, _targets.Count)];
-        newTarget.SetTarget();
+        newTarget.IsTargetThief();
         _targets.Remove(newTarget);
         return newTarget.transform;
     }

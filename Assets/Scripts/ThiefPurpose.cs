@@ -6,19 +6,10 @@ public class ThiefPurpose : MonoBehaviour
 {
     private bool _isTarget = false;
 
-    public void SetTarget()
+    public bool IsTarget => _isTarget;
+
+    public void IsTargetThief()
     {
         _isTarget = true;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (_isTarget)
-        {
-            if (collision.gameObject.TryGetComponent<ThiefMove>(out ThiefMove thief))
-            {
-                thief.TimeToSteal();
-            }
-        }
     }
 }

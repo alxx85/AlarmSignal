@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class ThiefMove : MonoBehaviour
+public class ThiefMover : MonoBehaviour
 {
     [SerializeField] private Targets _possibleTargets;
-    [SerializeField] private float Speed;
+    [SerializeField] private float _speed;
 
     private Animator _animator;
     private Transform _target;
     private Vector3 _doorPosition;
     private float _targetPosition;
-    private bool _isStolen;
+    private bool _isTargetStolen;
     private bool _isInMove;
 
     private const string Move = "Speed";
@@ -23,6 +23,7 @@ public class ThiefMove : MonoBehaviour
         _animator = GetComponent<Animator>();
         _doorPosition = transform.position;
         _target = _possibleTargets.GetTargetTransform();
+        Debug.Log(_target.name);
         _targetPosition =_target.position.x;
         _isInMove = true;
     }
@@ -30,7 +31,7 @@ public class ThiefMove : MonoBehaviour
     private void Update()
     {
         if (_isInMove)
-            Moving();
+            ChangePosition();
     }
 
     public void TimeToSteal()
@@ -40,15 +41,15 @@ public class ThiefMove : MonoBehaviour
         _animator.SetTrigger(Active);
     }
 
-    private void Moving()
+    private void ChangePosition()
     {
         float distance;
-        if (_isStolen)
+        if (_isTargetStolen)
         {
             distance = Mathf.Abs(_doorPosition.x - transform.position.x);
             if (distance > 0)
             {
-                transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, _doorPosition.x, Speed * Time.deltaTime),
+                transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, _doorPosition.x, _speed * Time.deltaTime),
                                                  transform.position.y, 0);
             }
             else
@@ -62,18 +63,29 @@ public class ThiefMove : MonoBehaviour
             distance = Mathf.Abs(_targetPosition - transform.position.x);
             if (distance > 0)
             {
-                transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, _targetPosition, Speed * Time.deltaTime),
+                transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, _targetPosition, _speed * Time.deltaTime),
                                                  transform.position.y, 0);
             }
         }
         _animator.SetFloat(Move, distance);
     }
 
-    private void SetStolen()
+    private void IsStolen()
     {
-        _isStolen = true;
+        _isTargetStolen = true;
         Destroy(_target.gameObject);
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, 0);
         _isInMove = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<ThiefPurpose>(out ThiefPurpose target))
+        {
+            if (target.IsTarget)
+            {
+                TimeToSteal();
+            }
+        }
     }
 }

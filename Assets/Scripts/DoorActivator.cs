@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
-public class OpeningDoor : MonoBehaviour
+public class DoorActivator : MonoBehaviour
 {
     [SerializeField] private UnityEvent _usingDoor;
 
@@ -19,7 +19,7 @@ public class OpeningDoor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<ThiefMove>(out ThiefMove thief))
+        if (collision.TryGetComponent<ThiefMover>(out ThiefMover thief))
         {
             _animator.SetTrigger(Action);
             _usingDoor?.Invoke();

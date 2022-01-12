@@ -18,7 +18,7 @@ public class Signaling : MonoBehaviour
     {
         _alarm = GetComponent<AudioSource>();
         _renderer = GetComponent<SpriteRenderer>();
-        _startCoroutines = new List<Coroutine>()
+        _startCoroutines = new List<Coroutine>();
     }
 
     public void ThiefUsingDoor()
