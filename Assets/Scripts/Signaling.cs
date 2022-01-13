@@ -11,14 +11,13 @@ public class Signaling : MonoBehaviour
     private float _volumeMax = 1f;
     private float _volumeMin = 0f;
     private float _volumeStep = 0.1f;
-    private float _delayStepVolume = 0.5f;
-    private List<Coroutine> _startCoroutines;
+    private List<Coroutine> _startCoroutines = new List<Coroutine>();
+    private WaitForSeconds _delay = new WaitForSeconds(0.5f);
 
     private void Start()
     {
         _alarm = GetComponent<AudioSource>();
         _renderer = GetComponent<SpriteRenderer>();
-        _startCoroutines = new List<Coroutine>();
     }
 
     public void ThiefUsingDoor()
@@ -41,17 +40,14 @@ public class Signaling : MonoBehaviour
 
     private void StopRunningCoroutine()
     {
-        if (_startCoroutines.Count > 0)
+        foreach (Coroutine coroutine in _startCoroutines)
         {
-            foreach (Coroutine coroutine in _startCoroutines)
+            if (coroutine != null)
             {
-                if (coroutine != null)
-                {
-                    StopCoroutine(coroutine);
-                }
+                StopCoroutine(coroutine);
             }
-            _startCoroutines.Clear();
         }
+        _startCoroutines.Clear();
     }
 
     private IEnumerator StartAlarm()
@@ -59,7 +55,7 @@ public class Signaling : MonoBehaviour
         while (_alarm.volume < _volumeMax)
         {
             _alarm.volume = Mathf.MoveTowards(_alarm.volume, _volumeMax, _volumeStep);
-            yield return new WaitForSeconds(_delayStepVolume);
+            yield return _delay;
         }
     }
 
@@ -68,7 +64,7 @@ public class Signaling : MonoBehaviour
         while (_alarm.volume > _volumeMin)
         {
             _alarm.volume = Mathf.MoveTowards(_alarm.volume, _volumeMin, _volumeStep);
-            yield return new WaitForSeconds(_delayStepVolume);
+            yield return _delay;
         }
         _alarm.Stop();
     }
@@ -78,9 +74,9 @@ public class Signaling : MonoBehaviour
         while (_isActivated)
         {
             _renderer.color = Color.red;
-            yield return new WaitForSeconds(_delayStepVolume);
+            yield return _delay;
             _renderer.color = Color.white;
-            yield return new WaitForSeconds(_delayStepVolume);
+            yield return _delay;
         }
     }
 }
